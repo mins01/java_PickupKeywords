@@ -1,7 +1,6 @@
 package com.mins01.java.PickupKeywords;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -14,37 +13,78 @@ public class App
 		
 		//========================
 		System.out.println("START");
-		System.out.println("====================");
-		//========================
-		
+		//========================		
 		PickupKeywords pk = new PickupKeywords();
-//		String html = pk.getHTML("http://domeggook.com/main/");
-//		pk.setHTML(html);
+		ArrayList<TextInfo> texts = null;
+		ArrayList<WordInfo> words = null;
+		GetAppInfoByPackagename gaibp = new GetAppInfoByPackagename();
+		System.out.println("====================");
+		
+		String url = "http://domeggook.com/main/";
+		System.out.println("url : "+url);
 		try{
-			pk.setUrl("http://domeggook.com/main/");
-			ArrayList<TextInfo> texts= pk.getTexts(); //get texts
-			ArrayList<WordInfo> words= pk.getWords(texts); // generate words from texts
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, 10).forEach(System.out::println);	
 		}catch(Exception e){
 			e.printStackTrace();
+			System.out.println("ERROR");
+		}
+		
+		System.out.println("====================");
+		url = "http://aldkjlkjasdlja.asdjkljasd/main/";
+		System.out.println("url : "+url);
+		try{
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+			words= pk.getWords(texts); // generate words from texts
+			words.subList(0, 10).forEach(System.out::println);	
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}
+		System.out.println("====================");
+		url = "https://www.google.com/asd";
+		System.out.println("url : "+url);
+		try{
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+			words= pk.getWords(texts); // generate words from texts
+			words.subList(0, 10).forEach(System.out::println);	
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR");
 		}
 		
 		
 		//========================
 		System.out.println("====================");
-		//========================
-		
-		GetAppInfoByPackagename gaibp = new GetAppInfoByPackagename();
 		String pkname = "com.mins01.othello001";
+		System.out.println("packagename : "+pkname);
 		try{
 			gaibp.setPackagename(pkname);
-			ArrayList<TextInfo> texts2= gaibp.getTexts(); //get texts
-			ArrayList<WordInfo> words2= gaibp.getWords(texts2); // generate words from texts
-			words2.subList(0, 10).forEach(System.out::println);
+			texts= gaibp.getTexts(); //get texts
+			words= gaibp.getWords(texts); // generate words from texts
+			words.subList(0, 10).forEach(System.out::println);
 		}catch(Exception e){
 			e.printStackTrace();
+			System.out.println("ERROR");
 		}
-		
+
+		System.out.println("====================");
+		pkname = "com.mins01.othello001xxx";
+		System.out.println("packagename : "+pkname);
+		try{
+			gaibp.setPackagename(pkname);
+			texts= gaibp.getTexts(); //get texts
+			words= gaibp.getWords(texts); // generate words from texts
+			words.subList(0, 10).forEach(System.out::println);
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR");
+			
+		}
 		//========================
 		System.out.println("====================");
 		System.out.println("END");
