@@ -26,7 +26,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);	
+			words.subList(0, Math.min(10, words.size())).forEach(System.out::println);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -40,7 +40,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);	
+			words.subList(0, Math.min(10, words.size())).forEach(System.out::println);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
