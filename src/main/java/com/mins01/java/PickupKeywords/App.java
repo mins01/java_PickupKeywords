@@ -33,6 +33,22 @@ public class App
 		}
 		
 		System.out.println("====================");
+		
+		url = "https://www.amazon.com/s?k=cake&ref=is_s";
+		System.out.println("url : "+url);
+		try{
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+			words= pk.getWords(texts); // generate words from texts
+			words.subList(0, 10).forEach(System.out::println);	
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}
+		
+		
+		
+		System.out.println("====================");
 		url = "http://aldkjlkjasdlja.asdjkljasd/main/";
 		System.out.println("url : "+url);
 		try{

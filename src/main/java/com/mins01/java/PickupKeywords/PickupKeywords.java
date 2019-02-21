@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 public class PickupKeywords {
 	Document doc = null;
 	public String jsonString_conf_scores = "{\"h1\":50,\"h2\":40,\"h3\":30,\"h4\":20,\"h5\":10,\"h6\":10,\"title\":100,\"span\":5,\"a\":1,\"li\":5,\"meta-description\":50,\"meta-keywords\":50,\"meta-og:title\":100,\"meta-og:description\":25}";
+	public String userAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36";
 	public JsonObject conf_scores = null;
 	public PickupKeywords(){
 		conf_scores = (JsonObject)(new JsonParser()).parse(this.jsonString_conf_scores);
@@ -25,7 +26,7 @@ public class PickupKeywords {
 		
 	}
 	public String getHTML(String strURL) throws Exception{
-		String html = Jsoup.connect(strURL).get().html();
+		String html = Jsoup.connect(strURL).userAgent(userAgent).get().html();
 		return html;
 	}
 	public String getHTML(URL iURL) throws Exception{
