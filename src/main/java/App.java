@@ -1,7 +1,9 @@
-package com.mins01.java.PickupKeywords;
+
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+
+import com.mins01.java.PickupKeywords.*;
 
 
 /**
@@ -14,7 +16,6 @@ public class App
 		
 		
 		Consumer<WordInfo> print = new Consumer<WordInfo>() {
-			@Override
 			public void accept(WordInfo x) {
 				System.out.println(x);
 			}
