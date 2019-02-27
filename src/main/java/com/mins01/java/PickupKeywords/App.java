@@ -1,6 +1,7 @@
 package com.mins01.java.PickupKeywords;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 
 /**
@@ -10,6 +11,14 @@ import java.util.ArrayList;
 public class App 
 {
 	public static void main(String[] args){
+		
+		
+		Consumer<WordInfo> print = new Consumer<WordInfo>() {
+			@Override
+			public void accept(WordInfo x) {
+				System.out.println(x);
+			}
+		};
 		
 		//========================
 		System.out.println("START");
@@ -26,7 +35,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, Math.min(10, words.size())).forEach(System.out::println);	
+			words.subList(0, Math.min(10, words.size())).forEach(print);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -40,7 +49,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, Math.min(10, words.size())).forEach(System.out::println);	
+			words.subList(0, Math.min(10, words.size())).forEach(print);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -55,7 +64,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);	
+			words.subList(0, 10).forEach(print);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -67,7 +76,7 @@ public class App
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);	
+			words.subList(0, 10).forEach(print);	
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -82,7 +91,7 @@ public class App
 			gaibp.setPackagename(pkname);
 			texts= gaibp.getTexts(); //get texts
 			words= gaibp.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);
+			words.subList(0, 10).forEach(print);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
@@ -95,7 +104,7 @@ public class App
 			gaibp.setPackagename(pkname);
 			texts= gaibp.getTexts(); //get texts
 			words= gaibp.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(System.out::println);
+			words.subList(0, 10).forEach(print);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("ERROR");
