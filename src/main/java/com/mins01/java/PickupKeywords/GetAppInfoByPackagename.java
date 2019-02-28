@@ -1,9 +1,5 @@
 package com.mins01.java.PickupKeywords;
 
-import java.util.ArrayList;
-
-import org.jsoup.Jsoup;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

@@ -1,8 +1,5 @@
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -15,7 +12,7 @@ import com.mins01.java.PickupKeywords.*;
  */
 public class App 
 {
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args){
 		
 		
 		Consumer<Object> print = new Consumer<Object>() {
@@ -55,7 +52,7 @@ public class App
 			System.out.println(e.getMessage());
 			System.out.println("ERROR");
 		}
-System.exit(0);		
+		// System.exit(0);
 		System.out.println("====================");
 		
 		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
