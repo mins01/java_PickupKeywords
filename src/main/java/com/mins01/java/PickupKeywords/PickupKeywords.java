@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,9 +19,16 @@ import java.util.regex.Pattern;
 
 public class PickupKeywords {
 	Document doc = null;
-	public String jsonString_conf_scores = "{\"h1\":50,\"h2\":40,\"h3\":30,\"h4\":20,\"h5\":10,\"h6\":10,\"title\":100,\"span\":5,\"a\":1,\"li\":5,\"meta-description\":50,\"meta-keywords\":50,\"meta-og:title\":100,\"meta-og:description\":25}";
+	public String jsonString_conf_scores = "{\"h1\":50,\"h2\":40,\"h3\":30,\"h4\":20,\"h5\":10,\"h6\":10,\"title\":50,\"span\":5,\"a\":1,\"li\":5,\"meta-description\":50,\"meta-keywords\":50,\"meta-og:title\":50,\"meta-og:description\":25,\"script\":0,\"style\":0}";
 	public String userAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36";
 	public JsonObject conf_scores = null;
+	
+	public int min_length = 2; //word의 최소 길이
+	public int max_length = 100; //word의 최대 길이
+	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a";
+	public String search_metas = "meta[name=\"description\"],meta[name=\"keywords\"],meta[property=\"og:title\"],meta[property=\"og:description\"]";
+	public double numeric_multiple = 1; //숫자형에 대한 점수 배수
+	
 	public PickupKeywords(){
 		conf_scores = (JsonObject)(new JsonParser()).parse(this.jsonString_conf_scores);
 //		System.out.println(conf_scores.get("h1"));
@@ -27,6 +36,7 @@ public class PickupKeywords {
 	}
 	public String getHTML(String strURL) throws Exception{
 		String html = Jsoup.connect(strURL).userAgent(userAgent).get().html();
+		System.out.println(html.length());
 		return html;
 	}
 	public String getHTML(URL iURL) throws Exception{
@@ -56,10 +66,11 @@ public class PickupKeywords {
 	    }
 		return "utf-8";
 	}
-	public int min_length = 2;
-	public int max_length = 100;
-	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a";
-	public String search_metas = "meta[name=\"description\"],meta[name=\"keywords\"],meta[property=\"og:title\"],meta[property=\"og:description\"]";
+	
+	public Boolean isNumeric(String str){
+		return str != null && str.matches("^[-+]?\\d*\\.?\\d+$");		
+	}
+	
 	
 	
 			
@@ -87,17 +98,19 @@ public class PickupKeywords {
 		Elements els = this.doc.select(this.search_tags);
 		ArrayList<TextInfo> al = new ArrayList<TextInfo>();
 		for(Element el : els){
-//			System.out.println(el.tagName()+","+el.text().length()+","+el.childNodeSize());
+			
 			if(el.childNodeSize()>1){
 				continue;
 			}
 			
+			
 			TextInfo ti = new TextInfo();
 			ti.tag = el.tagName();
-			ti.text = el.text();
+			ti.text = el.ownText();
 			syncScore(ti);
 //			System.out.println(ti.toString());
 			if(ti.text.length()==0){continue;}
+//			System.out.println(el.tagName()+","+el.text().length()+","+el.childNodeSize()+","+el.childNodeSize()+","+el.text());
 			al.add(ti);
 //			System.out.println(ti.toString());
 		}
@@ -149,16 +162,27 @@ public class PickupKeywords {
 					alwi.add(wi);
 				}
 				wi.count++;
-				wi.score += text.score;				
+				wi.score += text.score;
+				
+				if(isNumeric(st)){ //숫자로만 이루어져있을 경우
+					wi.score += text.score*this.numeric_multiple;	
+				}else{
+					wi.score += text.score;
+				}
 			}
 		}
 		Collections.sort(alwi, new Comparator<WordInfo>() {
 		    public int compare(WordInfo lhs, WordInfo rhs) {
-		    	long r = rhs.score - lhs.score;
+		    	double r = rhs.score - lhs.score;
 				if(r == 0){
 					r = rhs.score/rhs.count - lhs.score/lhs.count;
 				}
-				return Math.round(r);
+				if(r<0){
+					return -1;
+				}else if(r>0){
+					return 1;
+				}
+				return 0;
 		    }
 		});
 		return alwi;

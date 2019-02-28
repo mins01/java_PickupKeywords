@@ -1,5 +1,8 @@
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -12,14 +15,15 @@ import com.mins01.java.PickupKeywords.*;
  */
 public class App 
 {
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 		
 		
-		Consumer<WordInfo> print = new Consumer<WordInfo>() {
-			public void accept(WordInfo x) {
+		Consumer<Object> print = new Consumer<Object>() {
+			public void accept(Object x) {
 				System.out.println(x);
 			}
 		};
+
 		
 		//========================
 		System.out.println("START");
@@ -28,35 +32,65 @@ public class App
 		ArrayList<TextInfo> texts = null;
 		ArrayList<WordInfo> words = null;
 		GetAppInfoByPackagename gaibp = new GetAppInfoByPackagename();
-		System.out.println("====================");
-		
 		String url = "http://domeggook.com/main/";
-		System.out.println("url : "+url);
-		try{
-			pk.setUrl(url);
-			texts= pk.getTexts(); //get texts
-			words= pk.getWords(texts); // generate words from texts
-			words.subList(0, Math.min(10, words.size())).forEach(print);	
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERROR");
-		}
 		
+//		System.out.println("====================");
+//		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
+//
+//		String html = pk.getHTML(url);
+//		Files.write(Paths.get("c:/temp/xx.txt"), html.getBytes());
+//		return;
+		
+		
+//		System.out.println("====================");
+//		System.out.println("url : "+url);
+//		try{
+//			pk.setUrl(url);
+//			texts= pk.getTexts(); //get texts
+//			words= pk.getWords(texts); // generate words from texts
+//			words.subList(0, Math.min(10, words.size())).forEach(print);	
+//		}catch(Exception e){
+//			System.out.println(e.getMessage());
+//			System.out.println("ERROR");
+//		}
+//		
 		System.out.println("====================");
 		
-		url = "https://www.amazon.com/s?k=cake&ref=is_s";
+		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
 		System.out.println("url : "+url);
 		try{
 			pk.setUrl(url);
+//			pk.getTags().forEach(print);
+//			System.exit(0);
+
 			texts= pk.getTexts(); //get texts
 			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, Math.min(10, words.size())).forEach(print);	
+			System.out.println(">> setting .numeric_multiple = 0.1 <<");
+			pk.numeric_multiple = 0.1; //숫자 가중치 0으로 설정
+			words= pk.getWords(texts); // generate words from texts
+			words.subList(0, Math.min(10, words.size())).forEach(print);
+			pk.numeric_multiple = 1; //숫자 가중치 1로 되돌림
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			System.out.println("ERROR");
+		}
+//		System.exit(0);
+		System.out.println("====================");
+		
+		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
+		System.out.println("url : "+url);
+		try{
+			pk.numeric_multiple = 0; //숫자 가중치 0으로 설정
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+
+		}catch(Exception e){
+			System.out.println(e.getMessage());
 			System.out.println("ERROR");
 		}
 		
-		
+		pk.numeric_multiple = 1; //숫자 가중치 1로 되돌림
 		
 		System.out.println("====================");
 		url = "http://aldkjlkjasdlja.asdjkljasd/main/";
@@ -67,7 +101,7 @@ public class App
 			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, 10).forEach(print);	
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			System.out.println("ERROR");
 		}
 		System.out.println("====================");
@@ -79,7 +113,7 @@ public class App
 			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, 10).forEach(print);	
 		}catch(Exception e){
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 			System.out.println("ERROR");
 		}
 		
@@ -91,25 +125,14 @@ public class App
 		try{
 			gaibp.setPackagename(pkname);
 			texts= gaibp.getTexts(); //get texts
-			words= gaibp.getWords(texts); // generate words from texts
-			words.subList(0, 10).forEach(print);
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERROR");
-		}
 
-		System.out.println("====================");
-		pkname = "com.mins01.othello001xxx";
-		System.out.println("packagename : "+pkname);
-		try{
-			gaibp.setPackagename(pkname);
-			texts= gaibp.getTexts(); //get texts
 			words= gaibp.getWords(texts); // generate words from texts
 			words.subList(0, 10).forEach(print);
-		}catch(Exception e){
-			e.printStackTrace();
-			System.out.println("ERROR");
 			
+//			texts.forEach(print);
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			System.out.println("ERROR");
 		}
 		//========================
 		System.out.println("====================");
