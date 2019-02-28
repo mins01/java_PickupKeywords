@@ -2,6 +2,8 @@ package com.mins01.java.PickupKeywords;
 
 import java.util.ArrayList;
 
+import org.jsoup.Jsoup;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -18,12 +20,7 @@ public class GetAppInfoByPackagename extends PickupKeywords {
 	public void setPackagename(String packagename) throws Exception{
 		this.setUrl("https://play.google.com/store/apps/details?id="+packagename);
 	}
-	
-	public ArrayList<TextInfo> getTexts(){
-		ArrayList<TextInfo> tags = super.getTexts();
-		for(int i=0,m=tags.size();i<m;i++){
-			tags.get(i).text = tags.get(i).text.replace("Apps on Google Play", "");
-		}
-		return tags;
+	public String getHTML(String strURL) throws Exception{
+		return super.getHTML(strURL).replace("Apps on Google Play", ""); //불필요 단어 삭제
 	}
 }

@@ -19,13 +19,14 @@ import java.util.regex.Pattern;
 
 public class PickupKeywords {
 	Document doc = null;
-	public String jsonString_conf_scores = "{\"h1\":50,\"h2\":40,\"h3\":30,\"h4\":20,\"h5\":10,\"h6\":10,\"title\":50,\"span\":5,\"a\":1,\"li\":5,\"meta-description\":50,\"meta-keywords\":50,\"meta-og:title\":50,\"meta-og:description\":25,\"script\":0,\"style\":0}";
-	public String userAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36";
+	public String jsonString_conf_scores = "{\"h1\":50,\"h2\":40,\"h3\":30,\"h4\":20,\"h5\":10,\"h6\":10,\"title\":50,\"span\":5,\"a\":1,\"li\":5,\"input\":50,\"meta-description\":25,\"meta-keywords\":25,\"meta-og:title\":25,\"meta-og:description\":25,\"script\":0,\"style\":0}";
+//	public String userAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36"; //android
+	public String userAgent = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36"; //PC-windows
 	public JsonObject conf_scores = null;
 	
 	public int min_length = 2; //word의 최소 길이
 	public int max_length = 100; //word의 최대 길이
-	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a";
+	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a,input[type=text][value]";
 	public String search_metas = "meta[name=\"description\"],meta[name=\"keywords\"],meta[property=\"og:title\"],meta[property=\"og:description\"]";
 	public double numeric_multiple = 1; //숫자형에 대한 점수 배수
 	
@@ -106,7 +107,12 @@ public class PickupKeywords {
 			
 			TextInfo ti = new TextInfo();
 			ti.tag = el.tagName();
-			ti.text = el.ownText();
+			if(ti.tag.equals("input")){
+				ti.text = el.hasAttr("value")?el.attr("value"):"";
+			}else{
+				ti.text = el.ownText();	
+			}
+			
 			syncScore(ti);
 //			System.out.println(ti.toString());
 			if(ti.text.length()==0){continue;}

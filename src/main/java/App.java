@@ -32,7 +32,7 @@ public class App
 		ArrayList<TextInfo> texts = null;
 		ArrayList<WordInfo> words = null;
 		GetAppInfoByPackagename gaibp = new GetAppInfoByPackagename();
-		String url = "http://domeggook.com/main/";
+		String url = "http://domeggook.com/main/item/itemList.php?sfc=ttl&sf=ttl&sw=%C1%F6%BF%EC%B0%B3";
 		
 //		System.out.println("====================");
 //		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
@@ -42,18 +42,20 @@ public class App
 //		return;
 		
 		
-//		System.out.println("====================");
-//		System.out.println("url : "+url);
-//		try{
-//			pk.setUrl(url);
-//			texts= pk.getTexts(); //get texts
-//			words= pk.getWords(texts); // generate words from texts
-//			words.subList(0, Math.min(10, words.size())).forEach(print);	
-//		}catch(Exception e){
-//			System.out.println(e.getMessage());
-//			System.out.println("ERROR");
-//		}
-//		
+		System.out.println("====================");
+		System.out.println("url : "+url);
+		try{
+			pk.setUrl(url);
+			texts= pk.getTexts(); //get texts
+			words= pk.getWords(texts); // generate words from texts
+			words.subList(0, Math.min(10, words.size())).forEach(print);	
+			texts.forEach(print);	
+
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			System.out.println("ERROR");
+		}
+System.exit(0);		
 		System.out.println("====================");
 		
 		url = "https://www.amazon.com/s?k=speaker&ref=nb_sb_noss_1";
