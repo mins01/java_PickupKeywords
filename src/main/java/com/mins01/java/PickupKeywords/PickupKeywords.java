@@ -27,6 +27,7 @@ public class PickupKeywords {
 	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a,input[type=text][value]";
 	public String search_metas = "meta[name=\"description\"],meta[name=\"keywords\"],meta[property=\"og:title\"],meta[property=\"og:description\"]";
 	public double numeric_multiple = 1; //숫자형에 대한 점수 배수
+	public boolean wordToLowCase = false; //단어(wi,word)를 전부 소문자로 변환 처리
 	
 	public PickupKeywords(){
 		conf_scores = (JsonObject)(new JsonParser()).parse(this.jsonString_conf_scores);
@@ -158,6 +159,9 @@ public class PickupKeywords {
 			ArrayList<String> splited_texts = split_tags_string(text.text);
 			for(int i = 0,m=splited_texts.size();i<m;i++){
 				String st = splited_texts.get(i);
+				if(wordToLowCase){
+					st = st.toLowerCase();
+				}
 				
 				if((wi =kv.get(st))==null){
 					wi = new WordInfo();

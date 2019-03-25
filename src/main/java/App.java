@@ -66,10 +66,16 @@ public class App
 			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, Math.min(10, words.size())).forEach(print);	
 			System.out.println(">> setting .numeric_multiple = 0.1 <<");
+			System.out.println(">> setting .wordToLowCase = true <<");
+
 			pk.numeric_multiple = 0.1; //숫자 가중치 0으로 설정
+			pk.wordToLowCase = true; //단어를 무조건 소문자로 처리함
+
 			words= pk.getWords(texts); // generate words from texts
 			words.subList(0, Math.min(10, words.size())).forEach(print);
 			pk.numeric_multiple = 1; //숫자 가중치 1로 되돌림
+			pk.wordToLowCase = !pk.wordToLowCase; //되돌림
+
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 			System.out.println("ERROR");
@@ -81,6 +87,7 @@ public class App
 		System.out.println("url : "+url);
 		try{
 			pk.numeric_multiple = 0; //숫자 가중치 0으로 설정
+
 			pk.setUrl(url);
 			texts= pk.getTexts(); //get texts
 
@@ -90,6 +97,7 @@ public class App
 		}
 		
 		pk.numeric_multiple = 1; //숫자 가중치 1로 되돌림
+		pk.wordToLowCase = !pk.wordToLowCase; //되돌림
 		
 		System.out.println("====================");
 		url = "http://aldkjlkjasdlja.asdjkljasd/main/";
