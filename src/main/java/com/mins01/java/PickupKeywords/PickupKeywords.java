@@ -26,7 +26,7 @@ public class PickupKeywords {
 	public int max_length = 100; //word의 최대 길이
 	public String search_tags = "h1,h2,h3,h4,h5,title,span,div,li,a,input[type=text][value]";
 	public String search_metas = "meta[name=\"description\"],meta[name=\"keywords\"],meta[property=\"og:title\"],meta[property=\"og:description\"]";
-	public double numeric_multiple = 1; //숫자형에 대한 점수 배수
+	public double numericWeight = 1; //숫자형에 대한 점수 배수
 	public boolean wordToLowCase = false; //단어(wi,word)를 전부 소문자로 변환 처리
 	
 	public PickupKeywords(){
@@ -174,7 +174,7 @@ public class PickupKeywords {
 				wi.score += text.score;
 				
 				if(isNumeric(st)){ //숫자로만 이루어져있을 경우
-					wi.score += text.score*this.numeric_multiple;	
+					wi.score += text.score*this.numericWeight;	
 				}else{
 					wi.score += text.score;
 				}
