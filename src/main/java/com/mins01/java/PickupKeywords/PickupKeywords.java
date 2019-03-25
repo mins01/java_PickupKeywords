@@ -30,9 +30,10 @@ public class PickupKeywords {
 	public boolean wordToLowCase = false; //단어(wi,word)를 전부 소문자로 변환 처리
 	
 	public PickupKeywords(){
+
+	}
+	public void init(){
 		conf_scores = (JsonObject)(new JsonParser()).parse(this.jsonString_conf_scores);
-//		System.out.println(conf_scores.get("h1"));
-		
 	}
 	public String getHTML(String strURL) throws Exception{
 		String html = Jsoup.connect(strURL).userAgent(userAgent).get().html();

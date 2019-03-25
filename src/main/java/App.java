@@ -26,9 +26,11 @@ public class App
 		System.out.println("START");
 		//========================		
 		PickupKeywords pk = new PickupKeywords();
+		pk.init();
 		ArrayList<TextInfo> texts = null;
 		ArrayList<WordInfo> words = null;
 		GetAppInfoByPackagename gaibp = new GetAppInfoByPackagename();
+		gaibp.init();
 		String url = "http://domeggook.com/main/item/itemList.php?sfc=ttl&sf=ttl&sw=%C1%F6%BF%EC%B0%B3";
 		
 //		System.out.println("====================");

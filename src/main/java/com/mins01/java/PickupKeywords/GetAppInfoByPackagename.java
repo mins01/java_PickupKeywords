@@ -7,10 +7,10 @@ public class GetAppInfoByPackagename extends PickupKeywords {
 	public String jsonString_conf_scores = "{\"title\":100,\"meta-description\":90,\"meta-keywords\":100,\"meta-og:title\":100,\"meta-og:description\":90}";
 //	public String search_tags = "title";
 	public GetAppInfoByPackagename(){
-//		super.jsonString_conf_scores = this.jsonString_conf_scores;
-		super();
+		super();			
+	}
+	public void init(){
 		this.search_tags = "title";
-
 		conf_scores = (JsonObject)(new JsonParser()).parse(this.jsonString_conf_scores);
 	}
 	public void setPackagename(String packagename) throws Exception{
